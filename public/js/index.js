@@ -3,36 +3,24 @@ let socket = io();
 socket.on('connect', () => {
   console.log('connected to server');
 
-  // socket.emit('createEmail',{
-  //   to:'ralparslan@altar-tr.com',
-  //   text:'as iyilik'
-  // });
-
-
-  // socket.emit('createMessage',{
-  //   from:'ralparslan@altar-tr.com',
-  //   text:'That works for me'
-  // });
-
 
 });
 
-socket.on('disconnect', () => {
-  console.log('disconnected from server');
+  socket.on('disconnect', () => {
+    console.log('disconnected from server');
   });
-
-
 
   socket.on('newMessage', function(message){
     console.log('newMessage ', message);
+    let li = jQuery('<li></li>');
+    li.text(message.from + ': ' + message.text);
+    jQuery('#messages').append(li);
   });
 
-// socket.on('newEmail', function(email){
-//   console.log('New email ');
-//   console.log(email);
-// });
-
-// socket.on('newNotification', function(newNotification){
-//   console.log('New newNotification ');
-//   console.log(newNotification);
-// });
+jQuery('#message-form').on('submit',function(e){
+  e.preventDefault();
+  socket.emit('createMessage',{
+    from: 'User',
+    text: jQuery('[name=message]').val()
+  })
+});

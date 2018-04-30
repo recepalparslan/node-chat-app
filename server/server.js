@@ -18,9 +18,8 @@ app.use(express.static(publicPath));
 io.on('connection',(socket,)=>{
   console.log('New user connected');
 
-// admin text Welcome to the chat app
+    // admin text Welcome to the chat app
     socket.emit('newMessage',generateMessage('Admin','Welcome to chat app'));
-
     socket.broadcast.emit('newMessage',generateMessage('Admin','New user joined'));
 
 //PULL
@@ -33,6 +32,7 @@ io.on('connection',(socket,)=>{
     console.log('create message : ' , message);
 
       io.emit('newMessage',generateMessage(message.from,message.text));
+      // callback('This is from the server');
   });
 
   socket.on(('disconnect'),function(){
@@ -40,6 +40,7 @@ io.on('connection',(socket,)=>{
   });
 
 });
+
 
 server.listen(port, () => {
   console.log('server is up on port ' + port);
