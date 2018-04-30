@@ -16,11 +16,26 @@ app.use(express.static(publicPath));
 io.on('connection',(socket,)=>{
   console.log('New user connected');
 
-  socket.emit('newMessage',{
-    from:'Recep',
-    text:'see you then',
-    createdAt : 1543
-  });
+// admin text Welcome to the chat app
+    socket.emit('newMessage',{
+      from:'Admin',
+      text:'Welcome to chat app',
+      createAt: new Date().getTime()
+    });
+
+    socket.broadcast.emit('newMessage',{
+      from:'Admin',
+      text:'New user joined',
+      createAt: new Date().getTime()
+    });
+
+
+
+  // socket.emit('newMessage',{
+  //   from:'Recep',
+  //   text:'see you then',
+  //   createdAt : 1543
+  // });
 
 
 // PUSH
@@ -45,22 +60,13 @@ io.on('connection',(socket,)=>{
 
   socket.on('createMessage', function(message){
     console.log('create message : ' , message);
-    //tüm baglantılara istek atar
-    // io.emit('newMessage',{
-    //   from:message.from,
-    //   text:message.text,
-    //   createAt: new Date().getTime()
-    // });
 
-    socket.broadcast.emit('newMessage',{
+      io.emit('newMessage',{
       from:message.from,
       text:message.text,
-      createdAt:new Date().getTime()
+      createAt: new Date().getTime()
     });
-
-
-
-  })
+  });
 
   socket.on(('disconnect'),function(){
     console.log('User disconnected');
