@@ -16,11 +16,38 @@ app.use(express.static(publicPath));
 io.on('connection',(socket,)=>{
   console.log('New user connected');
 
-  socket.on(('connect'),()=>{
+  socket.emit('newMessage',{
+    from:'Recep',
+    text:'see you then',
+    createdAt : 1543
+  });
+
+
+// PUSH
+  // socket.emit('newEmail',{
+  //   from:'alparslanrecep@gmail.com',
+  //   text:'Sa naber',
+  //   createdAt : 1543
+  // });
+
+
+  // socket.emit('newNotification',{
+  //   title:'first notification',
+  //   text:'a new file added to lesson5',
+  //   createdAt : 1543
+  // });
+
+//PULL
+  socket.on(('connect'),function(){
     console.log('User connected');
   });
 
-  socket.on(('disconnect'),()=>{
+
+  socket.on('createMessage', function(message){
+    console.log('create message : ' , message);
+  })
+
+  socket.on(('disconnect'),function(){
     console.log('User disconnected');
   });
 
