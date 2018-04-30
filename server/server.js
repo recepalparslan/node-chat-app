@@ -45,6 +45,21 @@ io.on('connection',(socket,)=>{
 
   socket.on('createMessage', function(message){
     console.log('create message : ' , message);
+    //tüm baglantılara istek atar
+    // io.emit('newMessage',{
+    //   from:message.from,
+    //   text:message.text,
+    //   createAt: new Date().getTime()
+    // });
+
+    socket.broadcast.emit('newMessage',{
+      from:message.from,
+      text:message.text,
+      createdAt:new Date().getTime()
+    });
+
+
+
   })
 
   socket.on(('disconnect'),function(){

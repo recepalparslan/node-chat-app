@@ -9,10 +9,10 @@ socket.on('connect', () => {
   // });
 
 
-  socket.emit('createMessage',{
-    from:'ralparslan@altar-tr.com',
-    text:'That works for me'
-  });
+  // socket.emit('createMessage',{
+  //   from:'ralparslan@altar-tr.com',
+  //   text:'That works for me'
+  // });
 
 
 });
