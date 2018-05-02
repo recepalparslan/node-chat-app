@@ -28,11 +28,14 @@ io.on('connection',(socket,)=>{
   });
 
 
-  socket.on('createMessage', function(message){
+  socket.on('createMessage', function(message,callback){
     console.log('create message : ' , message);
+    io.emit('newMessage',generateMessage(message.from,message.text));
+    callback();
+  });
 
-      io.emit('newMessage',generateMessage(message.from,message.text));
-      // callback('This is from the server');
+  socket.on('createLocationMessage',(coords) => {
+    io.emit('newMessage',generateMessage('Admin', coords.latitude + ' ' + coords.longitude))
   });
 
   socket.on(('disconnect'),function(){
